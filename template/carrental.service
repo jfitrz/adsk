@@ -1,0 +1,13 @@
+[Unit]
+Description=service
+After=network-online.target
+
+[Service]
+Type=simple
+User=rentalAgent
+Group=rentalAgent
+ExecStart=/usr/bin/java -jar /opt/prod/carrental-0.0.1-SNAPSHOT.jar
+restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

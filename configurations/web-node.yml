@@ -1,0 +1,16 @@
+- name: "EPEL repository installation"
+  yum:
+    name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+    state: present
+- name: "Nginx installation"
+  yum:
+    name: nginx
+    state: present
+- name: "Setup proxy"
+  template:
+    src: template/proxy.conf
+    dest: /etc/nginx/conf.d/nginx.conf
+- name: "Restart nginx"
+  service:
+    name: nginx
+    state: restarted

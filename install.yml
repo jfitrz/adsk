@@ -1,0 +1,25 @@
+---
+- hosts: stats_node
+  become: yes
+  vars:
+    url_influxdb: "https://dl.influxdata.com/influxdb/releases/influxdb-1.7.1.x86_64.rpm"
+    app_node_private: 172.31.21.239
+  tasks:
+    - include_tasks: configurations/databases.yml
+    
+- hosts: app_node
+  become: yes
+  vars:
+    url_telegraf: "https://dl.influxdata.com/telegraf/releases/telegraf-1.8.3-1.x86_64.rpm"
+    db_node: 
+  tasks:
+    - include_tasks: configurations/app-node.yml
+    - include_tasks: configurations/telegraf-appnode.yml
+
+- hosts: web_node
+  become: yes
+  vars:
+    app_node_private: 172.31.21.239
+    app_public: 18.184.39.189
+  tasks:
+    - include_tasks: configurations/web-node.yml

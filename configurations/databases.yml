@@ -1,0 +1,7 @@
+- name: "Influxdb "
+  yum:
+    name: "{{url_influxdb}}"
+    state: present
+- service:
+    name: influxdb
+    state: started

@@ -1,0 +1,28 @@
+- name: "Install Java"
+  yum: 
+    name: java-1.8.0-openjdk
+    state: present
+- name: "Create directory for carrental Jar"
+  file:
+    path: /opt/prod
+    state: directory
+- name: "Copy carrental jar"
+  copy:
+    src: template/carrental-0.0.1-SNAPSHOT.jar
+    dest: /opt/prod/carrental-0.0.1-SNAPSHOT.jar
+    mode: 755
+- name: "Copy systemd conf"
+  copy:
+    src: template/carrental.service
+    dest: /etc/systemd/system/carrental.service
+- name: "Reload daemon"
+  systemd:
+    daemon_reload: yes
+- name: "Enable service"
+  service:
+    name: carrental
+    enabled: yes
+- name: "Start service"
+  service:
+    name: carrental
+    state: started
